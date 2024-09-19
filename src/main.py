@@ -7,14 +7,14 @@ def scrape_books_on_page(page_number):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Überprüfe, ob die Seite existiert
+    # Check if the page contains a 404 error
     if soup.title and "404" in soup.title.text:
         return None
 
     books = []
     all_books = soup.find_all("li", class_='col-xs-6 col-sm-4 col-md-3 col-lg-3')
 
-    if not all_books:  # Wenn keine Bücher gefunden werden, gib None zurück
+    if not all_books:
         return None
 
     for book in all_books:
