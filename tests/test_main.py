@@ -1,12 +1,15 @@
 import unittest
 from unittest.mock import patch, MagicMock  # Füge MagicMock hier hinzu
 from io import StringIO
+
 import sys
 import os
 
+# Füge den 'src'-Ordner manuell zum Suchpfad hinzu
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from src.main import scrape_books_on_page, save_to_files
+from main import scrape_books_on_page, save_to_files
+
 class TestScraping(unittest.TestCase):
 
 
