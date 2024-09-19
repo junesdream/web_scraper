@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock  # Füge MagicMock hier hinzu
 from io import StringIO
 import sys
 import os
@@ -7,8 +7,6 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 from src.main import scrape_books_on_page, save_to_files
-
-
 class TestScraping(unittest.TestCase):
 
 
