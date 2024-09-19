@@ -3,28 +3,32 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 def scrape_books_on_page(page_number):
-    """Scrapes book information from a specific page number."""
     url = f"https://books.toscrape.com/catalogue/page-{page_number}.html"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Check if the page exists
+    # Überprüfe, ob die Seite existiert
     if soup.title and "404" in soup.title.text:
         return None
 
     books = []
     all_books = soup.find_all("li", class_='col-xs-6 col-sm-4 col-md-3 col-lg-3')
 
+    if not all_books:  # Wenn keine Bücher gefunden werden, gib None zurück
+        return None
+
     for book in all_books:
         item = {
             'Title': book.find("img").get("alt"),
             'Link': "https://books.toscrape.com/catalogue/" + book.find("a").get("href"),
-            'Price': book.find("p", class_="price_color").text.strip()[2:],
+            'Price': book.find("p", class_="price_color").text.strip().replace('£', ''),
             'Stock': book.find("p", class_="instock availability").text.strip(),
         }
         books.append(item)
 
     return books
+
+
 
 def save_to_files(data, excel_file="books.xlsx", csv_file="books.csv"):
     """Saves the scraped data to Excel and CSV files."""
